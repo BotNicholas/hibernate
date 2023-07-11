@@ -12,20 +12,20 @@ public class Subscription {
     @Column(name = "subscription_date")
     private Date subscriptionDate;
 
-    public int getCourseId() {
-        return id.getCourseId();
+    public Course getCourse() {
+        return id.getCourse();
     }
 
-    public void setCourseId(int id) {
-        this.id.setCourseId(id);
+    public void setCourse(Course course) {
+        this.id.setCourse(course);
     }
 
-    public int getStudentId() {
-        return id.getStudentId();
+    public Student getStudent() {
+        return id.getStudent();
     }
 
-    public void setStudentId(int id) {
-        this.id.setStudentId(id);
+    public void setStudent(Student student) {
+        this.id.setStudent(student);
     }
 
     public Date getSubscriptionDate() {

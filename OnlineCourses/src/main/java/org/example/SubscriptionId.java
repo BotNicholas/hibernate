@@ -11,36 +11,42 @@ public class SubscriptionId implements Serializable {
 
     }
 
-    public SubscriptionId(int courseId, int studentId){
-        this.courseId = courseId;
-        this.studentId = studentId;
+    public SubscriptionId(Student student, Course course){
+        this.course = course;
+        this.student = student;
     }
 
-    //here can be used relationship annotation instead of these ides!!!
-    @Column(name = "student_id")
-    private int studentId;
-    @Column(name = "course_id")
-    private int courseId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_id")
+    private Student student;
 
-    public int getStudentId() {
-        return studentId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "course_id")
+    private Course course;
+//    @Column(name = "student_id")
+//    private int studentId;
+//    @Column(name = "course_id")
+//    private int courseId;
+
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public int getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if( (((SubscriptionId)obj).getCourseId() == courseId) && (((SubscriptionId)obj).getStudentId() == studentId))
+        if( (((SubscriptionId)obj).getCourse().getId() == course.getId()) && (((SubscriptionId)obj).getStudent().getId() == student.getId()))
             return true;
         return false;
     }

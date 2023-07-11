@@ -16,9 +16,7 @@ public class Main {
         //session.get(Course.class, 1).getStudents().forEach((s)-> System.out.println(s.getName()));
 
         //obtaining Subscription object
-        //System.out.println(session.get(Subscription.class, new SubscriptionId(10, 1)).getSubscriptionDate());
-
-
+//        System.out.println(session.get(Subscription.class, new SubscriptionId(session.get(Student.class, 2), session.get(Course.class, 11))).getSubscriptionDate());
 
 
 
