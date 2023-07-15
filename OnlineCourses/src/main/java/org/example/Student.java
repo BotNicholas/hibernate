@@ -17,7 +17,7 @@ public class Student {
     private Date registrationDate;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)//Student Entity is the owning side! (there are no any proof, because here we do not have any kind of Course's foreign key, but logically Student has Courses thus Student is the owning side)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)//Student Entity is the owning side! (there are no any proof, because here we do not have any kind of Course's foreign key, but logically Student has Courses thus Student is the owning side)
     @JoinTable(name = "Subscriptions",
                joinColumns = {@JoinColumn(name = "student_id")},
                inverseJoinColumns = {@JoinColumn(name = "course_id")})

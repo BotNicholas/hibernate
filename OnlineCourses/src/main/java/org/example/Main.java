@@ -1,11 +1,17 @@
 package org.example;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -30,6 +36,50 @@ public class Main {
 
         //obtaining PurchaseList object
         //System.out.println(session.get(PurchaseList.class, new PurchaseListId("Фуриков Эрнст", "Data Scientist с 0 до PRO")).getPrice());
+
+
+
+        //#####################################################################################################################################################################################
+
+        //Query Builder (Criteria API) (working with it when dynamic queries are required)
+        //Obtaining all Courses
+        //SQL Query: select * from Courses;
+        //to build a query we need criteria (Criteria for a Query (CriteriaQuery) is obtaining from CriteriaBuilder object)
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Course> criteria = cb.createQuery(Course.class);
+
+        Root<Course> from = criteria.from(Course.class); //Получаем источник (то отношение, из которого будем брать данные). Мы должны его явно установить, так как тут (CriteriaQuery<Course> criteria = cb.createQuery(Course.class)) он не устанавливается сам!
+            // Это как from Courses в запросе SQl! (возвращаются все атрибуты (колонки) => не просто from Courses, а именно * from courses (если нужны именно конкретные, а не все, можно воспользоваться методом get, но уже в select-e).
+            //При помощи метода get мы можем выбрать конкретные колонки для выборки)
+
+        criteria.select(from); //говорим, что осуществляем выборку из этого источника.
+        //Получается так, что мы добавляем к нашему критерию запроса различные составляющие.
+            // Например, select. Также мы можем добавить и where, и group by, и order by и другие части запроса, которые мы можем использовать в обычном запросе
+        //по итогу мы можем сделать вывод, что мы этим критерием попросту строим запрос к БД, но по частям. Именно по этой причине Criteria API применяется для динамических запросов!!!
+
+        Query<Course> query = session.createQuery(criteria);//Фактически мы строим запрос по какому-либо критерию (так называемый критерий запроса (то есть и есть это самый select * from where))
+            // (запрос с критерием), либо по какой-то строке запроса (HQL запрос). В случае запроса с критерием нам для начала нужно создать такой критерий запроса, из которого мы потом и
+            // построим этот запрос. По сути тот же HQL query, но составляется модульно...
+
+        query.getResultList().forEach((c)-> System.out.println(c.getName()));
+
+
+        System.out.println("----------------------");
+
+
+
+
+        //Obtaining all the Students
+        CriteriaQuery<Student> studentsCriteria = cb.createQuery(Student.class);
+
+        Root<Student> fromStudents = studentsCriteria.from(Student.class);
+        studentsCriteria.select(fromStudents);
+
+        Query<Student> studentsQuery = session.createQuery(studentsCriteria);
+
+        List<Student> students = studentsQuery.getResultList();
+
+        students.forEach((s)-> System.out.println(s.getName()));
 
         sessionFactory.close();
         session.close();
