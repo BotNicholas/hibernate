@@ -55,6 +55,7 @@ public class Main {
         criteria.select(from); //говорим, что осуществляем выборку из этого источника.
         //Получается так, что мы добавляем к нашему критерию запроса различные составляющие.
             // Например, select. Также мы можем добавить и where, и group by, и order by и другие части запроса, которые мы можем использовать в обычном запросе
+//        criteria.orderBy(cb.asc(from.get("name")));   -   итог: из CriteriaQuery мы получаем основные "части запросов", а уже из CriteriaBuilder мы получаем "дополнительные компоненты", такие, как вид сортировки, тип сравнения greatherThan или lessThan и т.д.
         //по итогу мы можем сделать вывод, что мы этим критерием попросту строим запрос к БД, но по частям. Именно по этой причине Criteria API применяется для динамических запросов!!!
 
         Query<Course> query = session.createQuery(criteria);//Фактически мы строим запрос по какому-либо критерию (так называемый критерий запроса (то есть и есть это самый select * from where))
@@ -74,12 +75,32 @@ public class Main {
 
         Root<Student> fromStudents = studentsCriteria.from(Student.class);
         studentsCriteria.select(fromStudents);
+//        studentsCriteria.select(fromStudents).where(cb.equal(fromStudents.get("id"), 1));
 
         Query<Student> studentsQuery = session.createQuery(studentsCriteria);
 
         List<Student> students = studentsQuery.getResultList();
 
         students.forEach((s)-> System.out.println(s.getName()));
+
+
+
+
+        //############################  COMPLICATED QUERY #######################################
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Course> criteriaQuery = criteriaBuilder.createQuery(Course.class);
+
+        Root<Course> root = criteriaQuery.from(Course.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(criteriaBuilder.greaterThan(root.get("price"), 100000));
+        criteriaQuery.orderBy(criteriaBuilder.desc(root.get("price")));
+
+
+        Query<Course> complicatedQuery = session.createQuery(criteriaQuery);
+
+        System.out.println("-----------------------------------------");
+        complicatedQuery.setMaxResults(3).getResultList().forEach((c)-> System.out.println(c.getName() + " - " + c.getPrice()));
+
 
         sessionFactory.close();
         session.close();
