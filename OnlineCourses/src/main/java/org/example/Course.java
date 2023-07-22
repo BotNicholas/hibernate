@@ -9,11 +9,11 @@ import java.util.List;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String name;
 
-    private int duration;
+    private Integer duration;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "enum")
@@ -28,14 +28,30 @@ public class Course {
     @Column(name = "students_count")
     private Integer studentsCount;
 
-    private int price;
+    private Integer price;
 
     @Column(name = "price_per_hour")
-    private float pricePerHour;
+    private Float pricePerHour;
 
 
     @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY)
     private List<Student> students;
+
+
+    public Course(){}
+
+    public Course(int id, String name, int duration, CourseType type, String description, Teacher teacher, int studentCount, int price, float pricePerHour, List<Student> students){
+        this.id = id;
+        this.name = name;
+        this.duration = duration;
+        this.type = type;
+        this.description = description;
+        this.teacher = teacher;
+        this.studentsCount = studentCount;
+        this.price = price;
+        this.pricePerHour = pricePerHour;
+        this.students = students;
+    }
 
     public int getId() {
         return id;

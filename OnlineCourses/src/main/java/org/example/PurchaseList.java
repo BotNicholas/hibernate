@@ -13,6 +13,18 @@ public class PurchaseList {
     @Column(name = "subscription_date")
     private Date subscriptionDate;
 
+
+
+    public PurchaseList(){}
+
+    public PurchaseList(PurchaseListId id, int price, Date subscriptionDate){
+        this.id = id;
+        this.price = price;
+        this.subscriptionDate = subscriptionDate;
+    }
+
+
+
     public String getStudentName() {
         return id.getStudentName();
     }

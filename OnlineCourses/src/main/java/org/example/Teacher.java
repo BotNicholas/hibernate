@@ -18,6 +18,19 @@ public class Teacher {
     private List<Course> courses;
 
 
+
+    public Teacher(){}
+
+
+    public Teacher(int id, String name, int salary, int age){
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+        this.age = age;
+    }
+
+
+
     public int getId() {
         return id;
     }

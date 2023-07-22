@@ -16,12 +16,14 @@
         <property name="current_session_context_class">thread</property>
         <property name="show_sql">true</property>
         <property name="format_sql">false</property>
-        <property name="hbm2ddl.auto">validate</property>
+<!--        <property name="hbm2ddl.auto">validate</property>-->
+        <property name="hbm2ddl.auto">update</property>
         <!-- mapping class="com.mcnz.jpa.examples.Player" / -->
         <mapping class="org.example.Course"></mapping>
         <mapping class="org.example.Teacher"></mapping>
         <mapping class="org.example.Student"></mapping>
         <mapping class="org.example.Subscription"></mapping>
         <mapping class="org.example.PurchaseList"></mapping>
+        <mapping class="org.example.LinkedPurchaseList"></mapping>
     </session-factory>
 </hibernate-configuration>

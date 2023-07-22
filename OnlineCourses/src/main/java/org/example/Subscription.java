@@ -12,6 +12,16 @@ public class Subscription {
     @Column(name = "subscription_date")
     private Date subscriptionDate;
 
+
+    public Subscription(){}
+
+    public Subscription(SubscriptionId id, Date subscriptionDate){
+        this.id = id;
+        this.subscriptionDate = subscriptionDate;
+    }
+
+
+
     public Course getCourse() {
         return id.getCourse();
     }
