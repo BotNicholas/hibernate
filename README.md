@@ -1,0 +1,3 @@
+# What is it about?
+
+This is my first tryings on hibernate. Here I configure hibernate connection via xml, create entities and perform some CRUD operations... 
